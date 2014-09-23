@@ -61,6 +61,7 @@ class Opsgenie < Sensu::Handler
     tags << "unknown" if event_status >= 3
     tags << "critical" if event_status == 2
     tags << "warning" if event_status == 1
+    tags << client_name
     post_body[:tags] = tags.join(",")
 
     post_body[:description] = @event['check']['description'] || ''
