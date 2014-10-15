@@ -66,13 +66,17 @@ class Opsgenie < Sensu::Handler
 
     post_body[:description] = @event['check']['description'] || ''
 
-    command_translations = {}
-    command = @event['check']['command']
-    command.scan(/:::(.*?):::/).map do |c|
-      command_translations[c.first] = c.first.split('.').inject(@event['client'], :fetch)
-    end
-    command_translations.each_pair do |name, value|
-      command.gsub!(":::#{name}:::", value)
+    if command
+      command_translations = {}
+      command = @event['check']['command']
+      command.scan(/:::(.*?):::/).map do |c|
+        command_translations[c.first] = c.first.split('.').inject(@event['client'], :fetch)
+      end
+      command_translations.each_pair do |name, value|
+        command.gsub!(":::#{name}:::", value)
+      end
+    else
+      command = "no command"
     end
 
     post_body[:details] = {
