@@ -66,7 +66,7 @@ class Opsgenie < Sensu::Handler
 
     post_body[:description] = @event['check']['description'] || ''
 
-    if command
+    if @event['check']['command']
       command_translations = {}
       command = @event['check']['command']
       command.scan(/:::(.*?):::/).map do |c|
