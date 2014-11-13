@@ -86,7 +86,7 @@ class Opsgenie < Sensu::Handler
       :issued => Time.at(@event['check']['issued']),
       :command => command
     }
-    post_body[:environment] = @event['check']['environment'] if @event['check'].has_key?('environment')
+    post_body[:details][:environment] = @event['check']['environment'] if @event['check'].has_key?('environment')
     post_to_opsgenie(:create, post_body)
   end
 
