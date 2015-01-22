@@ -35,7 +35,7 @@ class Opsgenie < Sensu::Handler
       client_name = client_name.split('.').first
     end
     params['name'] = client_name
-    params['apiKey'] = settings['opsgenie']['apiKey']
+    params['apiKey'] = settings['heartbeat']['apiKey']
 
     uri = URI.parse('https://api.opsgenie.com/v1/json/heartbeat/send')
     http = Net::HTTP.new(uri.host, uri.port)
